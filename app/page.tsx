@@ -1,3 +1,5 @@
+import { Main } from './UI/pages/Main';
+
 export default function Home() {
-  return <div>Yo</div>;
+  return <Main />;
 }

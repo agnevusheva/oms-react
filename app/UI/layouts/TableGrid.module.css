@@ -1,0 +1,15 @@
+.tablesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .tablesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+}

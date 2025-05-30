@@ -1,3 +1,10 @@
+.background {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--night-blue);
+}
+
 .lines {
   position: absolute;
   top: 0;

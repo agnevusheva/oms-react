@@ -1,0 +1,13 @@
+.contentContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.menuContainer {
+  width: 45%;
+}
+
+.selectedItems {
+  width: 45%;
+}

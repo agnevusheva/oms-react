@@ -1,0 +1,46 @@
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--warm-white);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.menuItem span {
+  flex: 1;
+  text-align: left;
+}
+
+.menuItem span:last-child {
+  text-align: right;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantityControls span {
+  min-width: 20px;
+  text-align: center;
+}
+
+.menuItem:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+}

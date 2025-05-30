@@ -1,0 +1,6 @@
+.page {
+  padding: 15px 10px;
+  overflow-y: scroll;
+  height: 100vh;
+  box-sizing: border-box;
+}

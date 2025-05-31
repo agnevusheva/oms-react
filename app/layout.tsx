@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${roboto.variable} ${styles.app}`}>
+      <body className={`${roboto.className} ${styles.app}`}>
         <main>
           <MainBackground>{children}</MainBackground>
         </main>

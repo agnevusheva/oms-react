@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './MenuList.module.css';
 import { ControlButton } from '../buttons/ControlButton';
-import { Currency, MenuItem } from '../../menu/types';
+import { Currency, MenuItem } from '../../app/menu/types';
 
 interface MenuListProps {
   menuItems: MenuItem[];

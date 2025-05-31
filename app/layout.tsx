@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { roboto } from './fonts/fonts';
+import { roboto } from '../fonts/fonts';
 import styles from './page.module.css';
-import { MainBackground } from './UI/backgrounds/MainBackground';
+import { MainBackground } from '../UI/backgrounds/MainBackground';
 
 export const metadata: Metadata = {
   title: 'OMS LiveStore',

@@ -1,34 +1,36 @@
 import { Events, makeSchema, Schema, State } from '@livestore/livestore';
 
-const menuItemSchema = Schema.Struct({
+// Scema
+const MenuItemSchema = Schema.Struct({
   id: Schema.String,
   name: Schema.String,
   price: Schema.Number,
   quantity: Schema.Int,
 });
 
-const draftOrder = Schema.Struct({
+const DraftOrderSchema = Schema.Struct({
   type: Schema.Int,
-  items: Schema.Array(menuItemSchema),
+  items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,
   id: Schema.String,
 });
 
-export const orderSchema = Schema.Struct({
+export const OrderSchema = Schema.Struct({
   type: Schema.Int,
   id: Schema.String,
-  items: Schema.Array(menuItemSchema),
+  items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,
   updatedAt: Schema.Date,
   status: Schema.String,
   omsId: Schema.String,
 });
 
-export const draftOrderSchema = Schema.NullOr(draftOrder);
+export const NullableDraftOrderSchema = Schema.NullOr(DraftOrderSchema);
 
+// Events
 const orderCreated = Events.synced({
   name: 'v1.OrderCreated',
-  schema: orderSchema,
+  schema: OrderSchema,
 });
 
 const OMSCreated = Events.synced({
@@ -44,12 +46,11 @@ const orderUpdated = Events.synced({
     id: Schema.String,
     status: Schema.optional(Schema.String),
     updatedAt: Schema.optional(Schema.Date),
-    items: Schema.optional(Schema.Array(menuItemSchema)),
+    items: Schema.optional(Schema.Array(MenuItemSchema)),
   }),
 });
 
-const events = { OMSCreated, orderCreated, orderUpdated };
-
+// Tables
 const ordersTable = State.SQLite.table({
   name: 'orders',
   columns: {
@@ -72,11 +73,13 @@ const OMSTable = State.SQLite.table({
 
 const orderDraft = State.SQLite.clientDocument({
   name: 'orderDraft',
-  schema: draftOrderSchema,
+  schema: NullableDraftOrderSchema,
   default: { value: null },
 });
 
 const tables = { orders: ordersTable, oms: OMSTable, orderDraft };
+
+const events = { OMSCreated, orderCreated, orderUpdated, orderDraftSet: tables.orderDraft.set };
 
 const materializers = State.SQLite.materializers(events, {
   'v1.OMSCreated': ({ id }) => tables.oms.insert({ id }),

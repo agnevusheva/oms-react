@@ -1,15 +1,15 @@
 import { MENU_SUBHEADER, SELECTED_ITEMS_SUBHEADER } from './consts';
 import { mapItemFromDTO } from './utils';
-import styles from './page.module.css';
+import styles from './Menu.module.css';
 import type { MenuItem } from './types';
-import { backofficeAPI } from '../../lib/backoffice/backofficeService';
 import { Card } from '../../UI/cards/Card';
 import { MenuList } from '../../UI/menu-list/MenuList';
 import { PageContainer } from '../../UI/page-container/PageConteiner';
 import { Header } from '../../UI/typography/Header';
+import { useLoaderData } from 'react-router-dom';
 
-export default async function MenuPage() {
-  const itemsDTO = await backofficeAPI.getItems();
+export default function Menu() {
+  const { itemsDTO } = useLoaderData();
   const menuItems: MenuItem[] = itemsDTO.map(mapItemFromDTO);
 
   return (

@@ -5,8 +5,12 @@ import LiveStoreWorker from './livestore.worker?worker';
 import type React from 'react';
 import { unstable_batchedUpdates as batchUpdates } from 'react-dom';
 import { schema } from './lib/liveStore/schema';
-
-const AppBody: React.FC = () => <section className="app-body">yo</section>;
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { MainBackground } from './UI/backgrounds/MainBackground';
+import './global.css';
+import styles from './App.module.css';
+import { Main } from './routes/main/Main';
+import Menu from './routes/menu/Menu';
 
 const storeId = 'oms-demo';
 
@@ -20,11 +24,15 @@ export const App: React.FC = () => (
   <LiveStoreProvider
     schema={schema}
     adapter={adapter}
-    renderLoading={_ => <div>Loading LiveStore ({_.stage})...</div>}
+    renderLoading={_ => <div>Loading...</div>}
     batchUpdates={batchUpdates}
     storeId={storeId}
     syncPayload={{ authToken: 'insecure-token' }}
   >
-    <AppBody />
+    <section className={styles.app}>
+      <MainBackground>
+        <Outlet />
+      </MainBackground>
+    </section>
   </LiveStoreProvider>
 );

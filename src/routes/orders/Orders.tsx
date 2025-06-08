@@ -1,14 +1,13 @@
 import { mapTableFromDTO } from './utils';
 import type { Table as TableType } from './types';
-import { ORDERS_HEADER } from '../consts';
-
-import { backofficeAPI } from '../../lib/backoffice/backofficeService';
 import { TablesGrid } from '../../UI/layouts/TableGrid';
 import { PageContainer } from '../../UI/page-container/PageConteiner';
 import { Table } from '../../UI/table/Table';
+import { useLoaderData } from 'react-router-dom';
+import { ORDERS_HEADER } from '../../utils';
 
-export default async function OrdersPage() {
-  const tablesDTO = await backofficeAPI.getTables();
+export default function Orders() {
+  const { tablesDTO } = useLoaderData();
   const tables: TableType[] = tablesDTO.map(mapTableFromDTO);
 
   return (

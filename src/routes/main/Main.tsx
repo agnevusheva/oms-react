@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Main.module.css';
-import { MAIN_TITLE, MENU_BUTTON, ORDERS_BUTTON } from './utils';
-import { NavButton } from '../buttons/NavButton';
-import { Header } from '../typography/Header';
-import { ROUTES } from '../../app/utils';
+import { NavButton } from '../../UI/buttons/NavButton';
+import { Header } from '../../UI/typography/Header';
+import { MAIN_TITLE, ORDERS_BUTTON, MENU_BUTTON } from './utils';
+import { ROUTES } from '../../utils';
 
 export function Main() {
   return (

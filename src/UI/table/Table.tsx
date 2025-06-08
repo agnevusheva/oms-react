@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Table.module.css';
-import { Shape } from '../../app/orders/types';
+import { Shape } from '../../routes/orders/types';
 
 interface TableProps {
   id: number;

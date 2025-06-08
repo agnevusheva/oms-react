@@ -3,28 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "vite build",
+    "dev": "VITE_LIVESTORE_SYNC_URL=http://localhost:8787 vite --force",
+    "preview": "vite preview",
+    "wrangler:deploy": "wrangler deploy"
   },
   "dependencies": {
     "@livestore/adapter-web": "^0.3.0",
     "@livestore/react": "^0.3.0",
-    "next": "15.3.2",
+    "@livestore/sync-cf": "^0.3.1",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-router-dom": "^7.6.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@livestore/devtools-vite": "^0.3.1",
     "@types/node": "^20",
-    "@types/react": "19",
-    "@types/react-dom": "19",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "prettier": "^3.5.3",
-    "typescript": "^5"
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4",
+    "wrangler": "^4.14.4"
+  },
+  "engines": {
+    "node": ">=23.0.0"
   }
 }

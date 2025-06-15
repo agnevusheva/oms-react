@@ -6,10 +6,11 @@ import { App } from '../App';
 import { TableDTO } from './orders/types';
 import Orders from './orders/Orders';
 import { ROUTES } from '../utils';
+import { Main } from './main/Main';
 
 const mainRoute: RouteObject = {
   path: ROUTES.MAIN,
-  Component: App,
+  Component: Main,
 };
 
 const menuRoute: RouteObject & {
@@ -34,4 +35,10 @@ const ordersRoute: RouteObject & {
   Component: Orders,
 };
 
-export const router = createBrowserRouter([mainRoute, menuRoute, ordersRoute] as RouteObject[]);
+const rootRoute: RouteObject = {
+  path: ROUTES.MAIN,
+  Component: App,
+  children: [menuRoute, ordersRoute, mainRoute],
+};
+
+export const router = createBrowserRouter([rootRoute] as RouteObject[]);

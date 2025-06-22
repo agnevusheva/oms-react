@@ -71,6 +71,7 @@ const OMSTable = State.SQLite.table({
   },
 });
 
+// UI state
 const orderDraft = State.SQLite.clientDocument({
   name: 'orderDraft',
   schema: NullableDraftOrderSchema,

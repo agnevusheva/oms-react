@@ -9,10 +9,10 @@ import { Outlet } from 'react-router-dom';
 import { MainBackground } from './UI/backgrounds/MainBackground';
 import './global.css';
 import styles from './App.module.css';
-import { Main } from './routes/main/Main';
 import { Header } from './UI/typography/Header';
+import { getClientId } from './utils';
 
-const storeId = 'oms-demo';
+const clientId = getClientId();
 
 const adapter = makePersistedAdapter({
   storage: { type: 'opfs' },
@@ -30,7 +30,7 @@ export const App: React.FC = () => (
       </MainBackground>
     )}
     batchUpdates={batchUpdates}
-    storeId={storeId}
+    storeId={clientId}
     syncPayload={{ authToken: 'insecure-token' }}
   >
     <section className={styles.app}>

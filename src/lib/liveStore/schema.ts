@@ -1,22 +1,22 @@
-import { Events, makeSchema, Schema, State } from '@livestore/livestore';
+import { Events, makeSchema, Schema, SessionIdSymbol, State } from '@livestore/livestore';
 
 // Scema
 const MenuItemSchema = Schema.Struct({
-  id: Schema.String,
+  id: Schema.Int,
   name: Schema.String,
   price: Schema.Number,
   quantity: Schema.Int,
 });
 
 const DraftOrderSchema = Schema.Struct({
-  type: Schema.Int,
+  type: Schema.String,
   items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,
   id: Schema.String,
 });
 
 export const OrderSchema = Schema.Struct({
-  type: Schema.Int,
+  type: Schema.String,
   id: Schema.String,
   items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,
@@ -24,8 +24,6 @@ export const OrderSchema = Schema.Struct({
   status: Schema.String,
   omsId: Schema.String,
 });
-
-export const NullableDraftOrderSchema = Schema.NullOr(DraftOrderSchema);
 
 // Events
 const orderCreated = Events.synced({
@@ -55,7 +53,7 @@ const ordersTable = State.SQLite.table({
   name: 'orders',
   columns: {
     id: State.SQLite.text({ primaryKey: true }),
-    type: State.SQLite.integer({ primaryKey: true }),
+    type: State.SQLite.text(),
     status: State.SQLite.text(),
     items: State.SQLite.json(),
     createdAt: State.SQLite.integer({ schema: Schema.DateFromNumber }),
@@ -74,11 +72,19 @@ const OMSTable = State.SQLite.table({
 // UI state
 const orderDraft = State.SQLite.clientDocument({
   name: 'orderDraft',
-  schema: NullableDraftOrderSchema,
-  default: { value: null },
+  schema: DraftOrderSchema,
+  default: {
+    id: SessionIdSymbol,
+    value: {
+      type: 'eat-in',
+      items: [],
+      createdAt: new Date(),
+      id: SessionIdSymbol.toString(),
+    },
+  },
 });
 
-const tables = { orders: ordersTable, oms: OMSTable, orderDraft };
+export const tables = { orders: ordersTable, oms: OMSTable, orderDraft };
 
 const events = { OMSCreated, orderCreated, orderUpdated, orderDraftSet: tables.orderDraft.set };
 

@@ -1,5 +1,5 @@
 import styles from './MenuList.module.css';
-import { ControlButton } from '../buttons/ControlButton';
+import { Button } from '../buttons/Button';
 import { MenuItem, Currency } from '../../routes/menu/types';
 import { useClientDocument } from '@livestore/react';
 import { tables } from '../../lib/liveStore/schema';
@@ -17,6 +17,7 @@ interface MenuListProps {
 
 export function MenuList({ menuItems, currency = '€', mode = MenuListMode.Read }: MenuListProps) {
   const [_, setDraft] = useClientDocument(tables.orderDraft);
+
   const onIncreaseQuantity = (itemToIncrease: MenuItem) => {
     setDraft(draft => {
       const idx = draft.items.findIndex(i => i.id === itemToIncrease.id);
@@ -63,13 +64,18 @@ export function MenuList({ menuItems, currency = '€', mode = MenuListMode.Read
           <span>
             {currency} {item.price.toFixed(2)}
           </span>
+
           {mode === MenuListMode.Write ? (
             <div className={styles.quantityControls}>
-              <ControlButton onClick={() => onDecreaseQuantity(item)}>−</ControlButton>
-              <span>{item.quantity}</span>
-              <ControlButton onClick={() => onIncreaseQuantity(item)}>+</ControlButton>
+              <Button type="button" onClick={() => onDecreaseQuantity(item)}>
+                −
+              </Button>
+              <Button type="button" onClick={() => onIncreaseQuantity(item)}>
+                +
+              </Button>
             </div>
           ) : null}
+          {mode === MenuListMode.Read ? <span>x {item.quantity}</span> : null}
         </div>
       ))}
     </div>

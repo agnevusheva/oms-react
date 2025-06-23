@@ -1,0 +1,31 @@
+.input {
+  box-sizing: border-box;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--night-blue);
+
+  background-color: var(--warm-white);
+  border: 1px solid var(--light-gray);
+  border-radius: 6px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  width: 50px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--electric-blue);
+  box-shadow: 0 0 0 3px --night-blue;
+}
+
+.input:disabled {
+  color: var(--light-gray);
+  background-color: var(--warm-white);
+  border-color: var(--pinkish);
+  cursor: not-allowed;
+}

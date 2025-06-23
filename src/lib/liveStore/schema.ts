@@ -8,7 +8,7 @@ const MenuItemSchema = Schema.Struct({
   quantity: Schema.Int,
 });
 
-const DraftOrderSchema = Schema.Struct({
+export const DraftOrderSchema = Schema.Struct({
   type: Schema.String,
   items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,

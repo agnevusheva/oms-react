@@ -81,4 +81,6 @@ button:focus:not(:focus-visible) {
 
   --light-gray: rgb(213, 202, 194);
   --gray: rgb(179, 174, 172);
+  --pinkish: rgb(255, 204, 204);
+  --electric-blue: rgb(0, 13, 255);
 }

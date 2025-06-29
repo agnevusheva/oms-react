@@ -1,3 +1,5 @@
+import { get } from 'http';
+
 export const ROUTES = {
   ORDERS: 'orders',
   MENU: 'menu',
@@ -7,14 +9,10 @@ export const ROUTES = {
 export const ORDERS_HEADER = 'Orders';
 
 export const getClientId = () => {
-  if (typeof window === 'undefined') return 'unused';
-
-  const searchParams = new URLSearchParams(window.location.search);
-  const clientId = searchParams.get('clientId');
-  if (clientId !== null) return clientId;
-
-  const newAppId = crypto.randomUUID();
-  searchParams.set('clientId', newAppId);
-
-  window.location.search = searchParams.toString();
+  const clientId = localStorage.getItem('clientId');
+  if (clientId) return clientId;
+  // Generate a new UUID if it doesn't exist
+  const newClientId = crypto.randomUUID();
+  localStorage.setItem('clientId', newClientId);
+  return newClientId;
 };

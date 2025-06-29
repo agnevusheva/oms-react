@@ -5,11 +5,12 @@ import { Shape } from '../../routes/orders/types';
 interface TableProps {
   id: number;
   shape?: Shape;
+  hasOrder: boolean;
 }
 
 type CSSVariables = Record<`--${string}`, string | number>;
 
-export function Table({ id, shape = Shape.SQUARE }: TableProps) {
+export function Table({ id, shape = Shape.SQUARE, hasOrder }: TableProps) {
   const isCircle = shape === Shape.CIRCLE;
   const radius = isCircle ? '50%' : '8px';
 
@@ -19,7 +20,7 @@ export function Table({ id, shape = Shape.SQUARE }: TableProps) {
   };
 
   return (
-    <div className={styles.table} style={style}>
+    <div className={`${styles.table} ${hasOrder ? styles.hasOrder : ''}`} style={style}>
       <span className={styles.id}>{id}</span>
     </div>
   );

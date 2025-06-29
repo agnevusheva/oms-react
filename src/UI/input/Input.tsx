@@ -2,7 +2,7 @@ import { ChangeEventHandler } from 'react';
 import styles from './Input.module.css';
 
 export const Input = ({
-  value,
+  value = 0,
   onChange,
 }: {
   value: number;

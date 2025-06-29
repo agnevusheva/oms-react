@@ -8,10 +8,11 @@ import { PageContainer } from '../../UI/page-container/PageConteiner';
 import { Header } from '../../UI/typography/Header';
 import { useLoaderData } from 'react-router-dom';
 import { useClientDocument, useStore } from '@livestore/react';
-import { tables } from '../../lib/liveStore/schema';
+import { events, tables } from '../../lib/liveStore/schema';
 import { Input } from '../../UI/input/Input';
 import { Button } from '../../UI/buttons/Button';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { OrderStatus, OrderType } from '../orders/types';
 
 export default function Menu() {
   const { store } = useStore();
@@ -19,13 +20,40 @@ export default function Menu() {
   const onTableNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTableNumber(Number(e.target.value));
   };
+
   const { itemsDTO } = useLoaderData();
   const menuItems: MenuItem[] = itemsDTO.map(mapItemFromDTO);
 
   const [draft] = useClientDocument(tables.orderDraft);
   const draftOrderItems = draft.items.map(mapItemFromDraft);
 
-  const onAssignOrder = () => {};
+  const orderCreated = () => {
+    if (tableNumber === undefined || tableNumber <= 0) {
+      alert('Please enter a valid table number.');
+      return;
+    } else if (draft.items.length === 0) {
+      alert('Please select at least one item.');
+      return;
+    }
+    store.commit(
+      events.orderCreated({
+        id: crypto.randomUUID(),
+        items: draft.items,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        status: OrderStatus.NEW,
+        type: OrderType.DINE_IN,
+        omsId: store.clientId,
+        accountId: tableNumber,
+      }),
+      events.orderDraftSet({ items: [] }),
+    );
+    setTableNumber(0);
+  };
+
+  const onAssignOrder = () => {
+    orderCreated();
+  };
 
   return (
     <PageContainer>

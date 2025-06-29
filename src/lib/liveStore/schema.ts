@@ -1,4 +1,5 @@
 import { Events, makeSchema, Schema, SessionIdSymbol, State } from '@livestore/livestore';
+import { OrderStatus, OrderType } from '../../routes/orders/types';
 
 // Scema
 const MenuItemSchema = Schema.Struct({
@@ -9,20 +10,18 @@ const MenuItemSchema = Schema.Struct({
 });
 
 export const DraftOrderSchema = Schema.Struct({
-  type: Schema.String,
   items: Schema.Array(MenuItemSchema),
-  createdAt: Schema.Date,
-  id: Schema.String,
 });
 
 export const OrderSchema = Schema.Struct({
-  type: Schema.String,
+  type: Schema.Enums(OrderType),
   id: Schema.String,
   items: Schema.Array(MenuItemSchema),
   createdAt: Schema.Date,
   updatedAt: Schema.Date,
-  status: Schema.String,
+  status: Schema.Enums(OrderStatus),
   omsId: Schema.String,
+  accountId: Schema.Int,
 });
 
 // Events
@@ -56,9 +55,10 @@ const ordersTable = State.SQLite.table({
     type: State.SQLite.text(),
     status: State.SQLite.text(),
     items: State.SQLite.json(),
-    createdAt: State.SQLite.integer({ schema: Schema.DateFromNumber }),
-    updatedAt: State.SQLite.integer({ schema: Schema.DateFromNumber, nullable: true }),
+    createdAt: State.SQLite.datetime(),
+    updatedAt: State.SQLite.datetime(),
     omsId: State.SQLite.text(),
+    accountId: State.SQLite.integer(),
   },
 });
 
@@ -76,17 +76,19 @@ const orderDraft = State.SQLite.clientDocument({
   default: {
     id: SessionIdSymbol,
     value: {
-      type: 'eat-in',
       items: [],
-      createdAt: new Date(),
-      id: SessionIdSymbol.toString(),
     },
   },
 });
 
 export const tables = { orders: ordersTable, oms: OMSTable, orderDraft };
 
-const events = { OMSCreated, orderCreated, orderUpdated, orderDraftSet: tables.orderDraft.set };
+export const events = {
+  OMSCreated,
+  orderCreated,
+  orderUpdated,
+  orderDraftSet: tables.orderDraft.set,
+};
 
 const materializers = State.SQLite.materializers(events, {
   'v1.OMSCreated': ({ id }) => tables.oms.insert({ id }),

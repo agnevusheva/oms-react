@@ -19,17 +19,3 @@ export const mapItemFromDraft = (draftItem: MenuItem): MenuItem => {
     quantity,
   };
 };
-
-/* export const buildOrder = ({  }, omsId: string): Order => {
-  const now = new Date();
-  return {
-    id: crypto.randomUUID(),
-    type: draft.type,
-    items: draft.items,
-    createdAt: now,
-    updatedAt: now,
-    status:,
-    omsId,
-  };
-};
- */

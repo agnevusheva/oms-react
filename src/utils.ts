@@ -9,10 +9,14 @@ export const ROUTES = {
 export const ORDERS_HEADER = 'Orders';
 
 export const getClientId = () => {
-  const clientId = localStorage.getItem('clientId');
-  if (clientId) return clientId;
+  if (typeof window === 'undefined') return 'unused';
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const storeId = searchParams.get('storeId');
+  if (storeId !== null) return storeId;
   // use business id if it doesn't exist yet
   const newClientId = '12345';
-  localStorage.setItem('clientId', newClientId);
-  return newClientId;
+  searchParams.set('storeId', newClientId);
+
+  window.location.search = searchParams.toString();
 };

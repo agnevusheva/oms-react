@@ -11,8 +11,8 @@ export const ORDERS_HEADER = 'Orders';
 export const getClientId = () => {
   const clientId = localStorage.getItem('clientId');
   if (clientId) return clientId;
-  // Generate a new UUID if it doesn't exist
-  const newClientId = crypto.randomUUID();
+  // use business id if it doesn't exist yet
+  const newClientId = '12345';
   localStorage.setItem('clientId', newClientId);
   return newClientId;
 };

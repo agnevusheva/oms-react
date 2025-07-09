@@ -7,7 +7,7 @@ import { schema } from './lib/liveStore/schema';
 makeWorker({
   schema,
   sync: {
-    backend: makeCfSync({ url: import.meta.env.VITE_LIVESTORE_SYNC_URL }),
+    backend: makeCfSync({ url: import.meta.env.VITE_SYNC_URL }),
     initialSyncOptions: { _tag: 'Blocking', timeout: 5000 },
   },
 });

@@ -31,7 +31,7 @@ export const App: React.FC = () => (
     )}
     batchUpdates={batchUpdates}
     storeId={clientId}
-    syncPayload={{ authToken: 'insecure-token' }}
+    syncPayload={{ authToken: import.meta.env.VITE_SYNC_TOKEN }}
   >
     <section className={styles.app}>
       <MainBackground>
